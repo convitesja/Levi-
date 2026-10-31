@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#071f32" />
+  <meta name="description" content="Uma aventura especial está chegando! Venha comemorar o primeiro aninho do Levi." />
+  <meta property="og:title" content="Levi • 1 aninho 🌊" />
+  <meta property="og:description" content="Você recebeu um convite especial. Abra e descubra todos os detalhes!" />
+  <meta property="og:type" content="website" />
+  <title>Convite especial • Levi 1 aninho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --ocean-deep: #071d30;
+      --ocean: #123b55;
+      --aqua: #82ebec;
+      --aqua-soft: #d5fdff;
+      --cream: #fff9eb;
+      --muted: #d0e5ed;
+      --shadow: 0 30px 90px rgba(0, 10, 24, .43);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--ocean-deep);
+      color: var(--cream);
+      font-family: 'Nunito', Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button:focus-visible, input:focus-visible {
+      outline: 3px solid var(--aqua);
+      outline-offset: 4px;
+    }
+
+    .background-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -4;
+      background: radial-gradient(circle at 50% 30%, #1c7b91, #071d30 80%);
+    }
+
+    .background-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background: linear-gradient(
+        180deg,
+        rgba(3, 21, 40, .55) 0%,
+        rgba(6, 28, 48, .35) 37%,
+        rgba(2, 15, 30, .84) 100%
+      );
+    }
+
+    .background-grain {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: radial-gradient(circle at 50% 43%, rgba(90, 239, 236, .09), transparent 51%);
+    }
+
+    .bubble {
+      position: fixed;
+      bottom: -50px;
+      left: var(--x);
+      width: var(--size);
+      height: var(--size);
+      border: 1px solid rgba(197, 251, 251, .31);
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 28%, rgba(220, 255, 255, .3), transparent 44%);
+      box-shadow: inset -4px -4px 10px rgba(115, 217, 225, .10);
+      opacity: .65;
+      pointer-events: none;
+      z-index: -1;
+      animation: floatUp var(--dur) linear infinite;
+      animation-delay: var(--delay);
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translate3d(0, 0, 0);
+        opacity: 0;
+      }
+      13% { opacity: .65; }
+      85% { opacity: .45; }
+      to {
+        transform: translate3d(35px, -115vh, 0);
+        opacity: 0;
+      }
+    }
+
+    .screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(72px, env(safe-area-inset-top)) 18px max(48px, env(safe-area-inset-bottom));
+      overflow: auto;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(18px) scale(.985);
+      transition: opacity .56s ease, visibility .56s ease, transform .56s ease;
+    }
+
+    .screen.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .shell {
+      width: min(100%, 430px);
+      margin: auto;
+      text-align: center;
+      position: relative;
+    }
+
+    .paper {
+      position: relative;
+      padding: clamp(28px, 7vw, 38px) clamp(21px, 6vw, 36px) 30px;
+      overflow: hidden;
+      border-radius: 32px;
+      background: linear-gradient(155deg, rgba(18, 67, 91, .80), rgba(5, 28, 51, .86));
+      border: 1px solid rgba(210, 252, 255, .26);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.14);
+      backdrop-filter: blur(17px);
+      -webkit-backdrop-filter: blur(17px);
+    }
+
+    .paper::before {
+      content: '';
+      pointer-events: none;
+      position: absolute;
+      inset: 9px;
+      border-radius: 25px;
+      border: 1px solid rgba(199, 248, 250, .10);
+    }
+
+    .eyebrow {
+      color: var(--aqua);
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .23em;
+      margin: 0 0 13px;
+    }
+
+    .ornament {
+      display: block;
+      margin: 0 auto 14px;
+      color: var(--aqua);
+    }
+
+    .title {
+      font-family: 'Fredoka', 'Nunito', sans-serif;
+      font-weight: 500;
+      font-size: clamp(30px, 8vw, 43px);
+      line-height: 1.17;
+      letter-spacing: -.025em;
+      margin: 0 auto 12px;
+      max-width: 340px;
+      text-wrap: balance;
+    }
+
+    .copy {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+      max-width: 300px;
+      margin: 0 auto 23px;
+    }
+
+    .divider-wave {
+      width: 104px;
+      height: 18px;
+      display: block;
+      margin: 6px auto 19px;
+    }
+
+    .name {
+      font-family: 'Fredoka', 'Nunito', sans-serif;
+      font-size: clamp(67px, 18vw, 97px);
+      line-height: 1.06;
+      font-weight: 500;
+      letter-spacing: -.05em;
+      margin: 6px 0 -3px;
+      color: var(--cream);
+      text-shadow: 0 7px 25px rgba(0, 0, 0, .20);
+    }
+
+    .age {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 11px;
+      margin: 0 0 21px;
+    }
+
+    .age-number {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 90px;
+      line-height: 1.1;
+      color: var(--aqua);
+    }
+
+    .age-label {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 28px;
+      color: var(--cream);
+    }
+
+    .small-wave {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .btn {
+      width: 100%;
+      min-height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 17px;
+      border: 0;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform .2s ease, filter .2s ease, background .2s ease;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      color: #082d40;
+      background: linear-gradient(125deg, #b6fcf3, #63dce6);
+      box-shadow: 0 12px 25px rgba(28, 188, 197, .19);
+    }
+
+    .btn-secondary {
+      color: #e1fbff;
+      background: rgba(166, 237, 244, .12);
+      border: 1px solid rgba(187, 243, 245, .28);
+    }
+
+    .btn + .btn {
+      margin-top: 10px;
+    }
+
+    .button-arrow {
+      width: 18px;
+      height: 18px;
+    }
+
+    .toolbar {
+      position: fixed;
+      top: max(17px, env(safe-area-inset-top));
+      left: 17px;
+      right: 17px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    .tool-button {
+      pointer-events: auto;
+      min-height: 41px;
+      border: 1px solid rgba(213, 253, 255, .23);
+      border-radius: 999px;
+      padding: 9px 14px;
+      background: rgba(4, 31, 52, .65);
+      color: var(--cream);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .tool-button[hidden] {
+      display: none;
+    }
+
+    .page-counter {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      color: rgba(240, 254, 255, .75);
+      margin: 18px auto 0;
+    }
+
+    .details-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 29px;
+      font-weight: 500;
+      margin: 0 0 16px;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 10px;
+      margin: 0 0 16px;
+      text-align: left;
+    }
+
+    .detail {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      border: 1px solid rgba(206, 252, 254, .13);
+      background: rgba(218, 250, 255, .065);
+      border-radius: 15px;
+      padding: 11px 13px;
+    }
+
+    .detail-icon {
+      font-size: 23px;
+      width: 32px;
+      text-align: center;
+    }
+
+    .detail-label {
+      color: var(--aqua);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .detail-value {
+      font-size: 16px;
+      font-weight: 800;
+      margin: 1px 0 0;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 14px 0 25px;
+    }
+
+    .count-box {
+      width: 72px;
+      min-width: 0;
+      padding: 12px 4px;
+      background: rgba(219, 251, 255, .08);
+      border: 1px solid rgba(190, 245, 255, .16);
+      border-radius: 15px;
+    }
+
+    .count-number {
+      display: block;
+      color: #a7f5f2;
+      font-size: 25px;
+      font-family: 'Fredoka', sans-serif;
+      line-height: 1.2;
+    }
+
+    .count-label {
+      display: block;
+      color: #d3e7ef;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    .count-message {
+      color: var(--aqua-soft);
+      font-weight: 800;
+      margin: 13px 0 23px;
+    }
+
+    .bottom-caption {
+      color: #e0f5f4;
+      font-size: 13px;
+      margin: 14px 0 0;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      padding: 16px;
+      background: rgba(0, 12, 26, .82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .modal {
+      width: min(100%, 370px);
+      padding: 25px;
+      background: #0c344c;
+      border: 1px solid rgba(188, 248, 255, .31);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 27px;
+      font-weight: 500;
+      margin: 0 0 6px;
+    }
+
+    .modal p {
+      color: var(--muted);
+      margin: 0 0 17px;
+      font-size: 14px;
+    }
+
+    .input-label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .name-input {
+      width: 100%;
+      min-height: 51px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(189, 242, 245, .4);
+      border-radius: 13px;
+      padding: 12px 14px;
+      background: #09283e;
+      color: #fff;
+    }
+
+    .name-input::placeholder {
+      color: #abc9d3;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .modal-actions .btn {
+      margin-top: 0;
+    }
+
+    @media (max-height: 650px) {
+      .screen {
+        padding-top: 58px;
+        padding-bottom: 18px;
+      }
+      .paper {
+        padding-top: 23px;
+        padding-bottom: 23px;
+      }
+      .title {
+        font-size: 29px;
+      }
+      .ornament {
+        width: 44px;
+        height: 44px;
+        margin-bottom: 9px;
+      }
+      .copy {
+        margin-bottom: 16px;
+      }
+      .name {
+        font-size: 70px;
+      }
+      .age-number {
+        font-size: 69px;
+      }
+      .countdown {
+        margin: 10px 0 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Deixe o index.html na mesma pasta dos arquivos de mídia originais. -->
+
+  <video class="background-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="videofundo.mp4" type="video/mp4" />
+  </video>
+
+  <div class="background-shade" aria-hidden="true"></div>
+  <div class="background-grain" aria-hidden="true"></div>
+
+  <div class="bubbles" aria-hidden="true">
+    <i class="bubble" style="--x:8%;--size:18px;--dur:17s;--delay:-4s"></i>
+    <i class="bubble" style="--x:21%;--size:10px;--dur:14s;--delay:-10s"></i>
+    <i class="bubble" style="--x:36%;--size:24px;--dur:22s;--delay:-9s"></i>
+    <i class="bubble" style="--x:53%;--size:12px;--dur:19s;--delay:-12s"></i>
+    <i class="bubble" style="--x:72%;--size:27px;--dur:23s;--delay:-6s"></i>
+    <i class="bubble" style="--x:89%;--size:14px;--dur:16s;--delay:-2s"></i>
+  </div>
+
+  <audio id="musica" loop preload="none">
+    <source src="mscmar.mp3" type="audio/mpeg" />
+  </audio>
+
+  <nav class="toolbar" aria-label="Controles do convite">
+    <button class="tool-button" id="voltar" type="button" hidden aria-label="Voltar à tela anterior">
+      ← Voltar
+    </button>
+    <button class="tool-button" id="som" type="button" hidden aria-pressed="true">
+      ♫ Música: ligada
+    </button>
+  </nav>
+
+  <main>
+    <!-- TELA 1: ABERTURA -->
+    <section class="screen active" aria-hidden="false">
+      <div class="shell">
+        <div class="paper">
+          <svg class="ornament" width="60" height="60" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <rect x="9" y="18" width="46" height="32" rx="8" stroke="currentColor" stroke-width="2" />
+            <path d="M11 21l21 17 21-17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M32 9v5m-15-2 3 4m27-4-3 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M28 24c0-2.2 3-3 4-.4 1-2.6 4-1.8 4 .4 0 2-4 4.8-4 4.8S28 26 28 24z" fill="currentColor"/>
+          </svg>
+
+          <p class="eyebrow">Uma mensagem só para você</p>
+          <h1 class="title">Você recebeu um convite especial!</h1>
+          <p class="copy">Uma pequena grande aventura está chegando. E você faz parte dessa história. 🌊</p>
+
+          <button class="btn btn-primary" type="button" data-next="2">
+            Abrir meu convite
+            <svg class="button-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14m-6-6 6 6-6 6"/>
+            </svg>
+          </button>
+        </div>
+        <div class="page-counter">01 / 04</div>
+      </div>
+    </section>
+
+    <!-- TELA 2: APRESENTAÇÃO -->
+    <section class="screen" aria-hidden="true">
+      <div class="shell">
+        <div class="paper">
+          <p class="eyebrow">O fundo do mar está em festa</p>
+          <div class="small-wave" aria-hidden="true">🫧 🐚 🫧</div>
+          <h1 class="name">Levi</h1>
+          <div class="age">
+            <span class="age-number">1</span>
+            <span class="age-label">aninho!</span>
+          </div>
+
+          <svg class="divider-wave" viewBox="0 0 104 18" fill="none" aria-hidden="true">
+            <path d="M0 8C9 1 17 1 26 8s17 7 26 0 17-7 26 0 17 7 26 0" stroke="#8ce9ec" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+
+          <p class="copy">Nosso pequeno explorador vai comemorar seu primeiro aniversário!</p>
+          <button class="btn btn-primary" type="button" data-next="3">
+            Continuar a aventura →
+          </button>
+        </div>
+        <div class="page-counter">02 / 04</div>
+      </div>
+    </section>
+
+    <!-- TELA 3: CONTAGEM REGRESSIVA -->
+    <section class="screen" aria-hidden="true">
+      <div class="shell">
+        <div class="paper">
+          <div class="small-wave" aria-hidden="true">🌊 ✨ 🐠</div>
+          <p class="eyebrow">Prepare-se para mergulhar</p>
+          <h1 class="title">Venha participar dessa aventura!</h1>
+          <p class="copy" style="margin-bottom:8px">
+            A contagem regressiva já começou...
+          </p>
+
+          <div class="countdown" id="countdown" role="timer" aria-label="Tempo até a festa">
+            <div class="count-box">
+              <span class="count-number" id="dias">--</span>
+              <span class="count-label">dias</span>
+            </div>
+            <div class="count-box">
+              <span class="count-number" id="horas">--</span>
+              <span class="count-label">horas</span>
+            </div>
+            <div class="count-box">
+              <span class="count-number" id="minutos">--</span>
+              <span class="count-label">minutos</span>
+            </div>
+          </div>
+
+          <p id="mensagem-contador" class="count-message" hidden></p>
+
+          <button class="btn btn-primary" type="button" data-next="4">
+            Ver detalhes da festa →
+          </button>
+        </div>
+        <div class="page-counter">03 / 04</div>
+      </div>
+    </section>
+
+    <!-- TELA 4: DETALHES -->
+    <section class="screen" aria-hidden="true">
+      <div class="shell">
+        <div class="paper">
+          <p class="eyebrow">Marque na agenda</p>
+          <h1 class="details-title">Nossa aventura tem data! 🐚</h1>
+
+          <div class="detail-list">
+            <div class="detail">
+              <div class="detail-icon" aria-hidden="true">📅</div>
+              <div>
+                <div class="detail-label">Data</div>
+                <div class="detail-value">19 de dezembro de 2026</div>
+              </div>
+            </div>
+
+            <div class="detail">
+              <div class="detail-icon" aria-hidden="true">🕑</div>
+              <div>
+                <div class="detail-label">Horário</div>
+                <div class="detail-value">14h00</div>
+              </div>
+            </div>
+
+            <div class="detail">
+              <div class="detail-icon" aria-hidden="true">📍</div>
+              <div>
+                <div class="detail-label">Local</div>
+                <div class="detail-value">Irashai</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" id="abrir-confirmacao" type="button">
+            ✓ Confirmar minha presença
+          </button>
+
+          <button class="btn btn-secondary" id="abrir-mapa" type="button">
+            ↗ Ver localização
+          </button>
+
+          <p class="bottom-caption">
+            Sua presença vai tornar esse dia ainda mais especial! 💙
+          </p>
+        </div>
+        <div class="page-counter">04 / 04</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FORMULÁRIO DE CONFIRMAÇÃO -->
+  <div class="modal-overlay" id="confirmacao" aria-hidden="true">
+    <form class="modal" id="form-confirmacao">
+      <h2>Que alegria! 💙</h2>
+      <p>Informe seu nome para confirmar a presença pelo WhatsApp.</p>
+
+      <label class="input-label" for="nome-convidado">Seu nome</label>
+      <input
+        class="name-input"
+        id="nome-convidado"
+        name="nome"
+        type="text"
+        placeholder="Como podemos te chamar?"
+        maxlength="80"
+        autocomplete="name"
+        required
+      />
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="fechar-confirmacao" type="button">
+          Cancelar
+        </button>
+        <button class="btn btn-primary" type="submit">
+          Confirmar ↗
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    'use strict';
+
+    const telas = [...document.querySelectorAll('.screen')];
+    const audio = document.getElementById('musica');
+    const voltar = document.getElementById('voltar');
+    const som = document.getElementById('som');
+    const modal = document.getElementById('confirmacao');
+    const nomeConvidado = document.getElementById('nome-convidado');
+
+    let telaAtual = 1;
+    let somLigado = true;
+    let ultimoFoco = null;
+
+    function irPara(numero) {
+      if (numero < 1 || numero > telas.length) return;
+
+      telaAtual = numero;
+
+      telas.forEach((tela, indice) => {
+        const ativa = indice === numero - 1;
+        tela.classList.toggle('active', ativa);
+        tela.setAttribute('aria-hidden', String(!ativa));
+        tela.inert = !ativa;
+      });
+
+      voltar.hidden = numero === 1;
+      som.hidden = numero === 1;
+
+      if (numero === 2 && somLigado) {
+        audio.play().catch(() => {
+          somLigado = false;
+          atualizarBotaoMusica();
+        });
+      }
+    }
+
+    function atualizarBotaoMusica() {
+      som.textContent = somLigado
+        ? '♫ Música: ligada'
+        : '♫ Música: desligada';
+
+      som.setAttribute('aria-pressed', String(somLigado));
+    }
+
+    document.querySelectorAll('[data-next]').forEach(botao => {
+      botao.addEventListener('click', () => {
+        irPara(Number(botao.dataset.next));
+      });
+    });
+
+    voltar.addEventListener('click', () => {
+      irPara(telaAtual - 1);
+    });
+
+    som.addEventListener('click', () => {
+      somLigado = !somLigado;
+
+      if (somLigado) {
+        audio.play().catch(() => {
+          somLigado = false;
+          atualizarBotaoMusica();
+        });
+      } else {
+        audio.pause();
+      }
+
+      atualizarBotaoMusica();
+    });
+
+    // DATA E CONTAGEM REGRESSIVA
+    const diaDaFesta = new Date('2026-12-19T14:00:00-03:00').getTime();
+    const fimDaFesta = diaDaFesta + 24 * 60 * 60 * 1000;
+    const countdown = document.getElementById('countdown');
+    const mensagemContador = document.getElementById('mensagem-contador');
+
+    function atualizarContagem() {
+      const agora = Date.now();
+      const restante = diaDaFesta - agora;
+
+      if (restante <= 0) {
+        countdown.hidden = true;
+        mensagemContador.hidden = false;
+        mensagemContador.textContent = agora < fimDaFesta
+          ? '🎉 Chegou o grande dia!'
+          : '💙 Essa aventura já foi celebrada!';
+        return;
+      }
+
+      countdown.hidden = false;
+      mensagemContador.hidden = true;
+
+      document.getElementById('dias').textContent =
+        Math.floor(restante / 86400000);
+
+      document.getElementById('horas').textContent =
+        String(Math.floor(restante / 3600000) % 24).padStart(2, '0');
+
+      document.getElementById('minutos').textContent =
+        String(Math.floor(restante / 60000) % 60).padStart(2, '0');
+    }
+
+    atualizarContagem();
+    setInterval(atualizarContagem, 30000);
+
+    // CONFIRMAÇÃO DE PRESENÇA
+    function abrirConfirmacao() {
+      ultimoFoco = document.activeElement;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      nomeConvidado.focus();
+    }
+
+    function fecharConfirmacao() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+
+      if (ultimoFoco && typeof ultimoFoco.focus === 'function') {
+        ultimoFoco.focus();
+      }
+    }
+
+    document.getElementById('abrir-confirmacao').addEventListener('click', abrirConfirmacao);
+    document.getElementById('fechar-confirmacao').addEventListener('click', fecharConfirmacao);
+
+    modal.addEventListener('click', (evento) => {
+      if (evento.target === modal) fecharConfirmacao();
+    });
+
+    document.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Escape' && modal.classList.contains('open')) {
+        fecharConfirmacao();
+      }
+    });
+
+    document.getElementById('form-confirmacao').addEventListener('submit', (evento) => {
+      evento.preventDefault();
+
+      const nome = nomeConvidado.value.trim();
+      if (!nome) return;
+
+      const mensagem =
+        `Oiiii Amanda! Eu quero confirmar minha presença no aniversário do Levi! 💙\n\nMeu nome: ${nome}`;
+
+      window.open(
+        `https://wa.me/5544999639628?text=${encodeURIComponent(mensagem)}`,
+        '_blank',
+        'noopener,noreferrer'
+      );
+
+      fecharConfirmacao();
+    });
+
+    // LOCALIZAÇÃO
+    document.getElementById('abrir-mapa').addEventListener('click', () => {
+      window.open(
+        'https://maps.app.goo.gl/nZvVcdajkrjYLt979',
+        '_blank',
+        'noopener,noreferrer'
+      );
+    });
+
+    // Impede foco em telas ocultas
+    telas.slice(1).forEach(tela => {
+      tela.inert = true;
+    });
+  </script>
+</body>
+</html>
