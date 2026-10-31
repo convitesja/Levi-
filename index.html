@@ -914,6 +914,26 @@
     telas.slice(1).forEach(tela => {
       tela.inert = true;
     });
+
+    // PAUSAR A MÚSICA AO SAIR DO CONVITE
+    function pausarMusicaAoSair() {
+      audio.pause();
+      somLigado = false;
+      atualizarBotaoMusica();
+    }
+
+    // Quando trocar de aba, minimizar o Chrome
+    // ou bloquear a tela do celular
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        pausarMusicaAoSair();
+      }
+    });
+
+    // Quando sair da página ou navegar para outro site
+    window.addEventListener('pagehide', () => {
+      pausarMusicaAoSair();
+    });
   </script>
 </body>
 </html>
